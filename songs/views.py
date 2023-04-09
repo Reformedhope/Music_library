@@ -19,4 +19,16 @@ def song_list (request):
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
+    
+@api_view(['GET'])
+def song_detail(request, pk):
+    try:
+        song = Song.objects.get(pk=pk)
+        serializer = SongSerializer(song)
+        return Response(serializer.data)
+    
+    except Song.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    
        
